@@ -4,6 +4,8 @@ const cors = require("cors");
 const { MongoClient, ObjectId } = require("mongodb");
 const dotenv = require("dotenv").config();
 const URL = process.env.DB;
+// Debug logging
+console.log("Connecting to database:", URL);
 
 const DB_NAME = "movie_db";
 
