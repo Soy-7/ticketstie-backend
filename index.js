@@ -18,7 +18,7 @@ app.use(express.json());
 app.get("/movie/get-movies", async (req, res) => {
   try {
     // Step 1. Connect the Database
-    const client = new MongoClient(URL, {}).connect();
+    const client = await new MongoClient(URL, {}).connect();
 
     // Step 2. Select the DB
     let db = (await client).db(DB_NAME);
@@ -30,7 +30,8 @@ app.get("/movie/get-movies", async (req, res) => {
     let movies = await collection.find({}).toArray();
 
     // Step 5. Close the connection
-    (await client).close();
+    if (client) client.close();
+
 
     res.json(movies);
   } catch (error) {
@@ -54,7 +55,8 @@ app.get("/movie/:id", async (req, res) => {
 
     let movie = await dbcollection.findOne({ _id: new ObjectId(id) });
 
-    (await client).close();
+    if (client) client.close();
+
 
     res.json(movie);
   } catch (error) {
@@ -85,7 +87,7 @@ app.post("/movie/book-movie", async (req, res) => {
 
   try {
     // Step 1. Connect the Database
-    const client = new MongoClient(URL, {}).connect();
+    const client =await new MongoClient(URL, {}).connect();
 
     // Step 2. Select the DB
     let db = (await client).db(DB_NAME);
