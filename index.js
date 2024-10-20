@@ -18,7 +18,10 @@ app.use(express.json());
 app.get("/movie/get-movies", async (req, res) => {
   try {
     // Step 1. Connect the Database
-    const client = await new MongoClient(URL, {}).connect();
+    console.log("Connecting to database:", URL);
+    const client = new MongoClient(URL);
+    await client.connect();
+    
 
     // Step 2. Select the DB
     let db = (await client).db(DB_NAME);
@@ -45,8 +48,10 @@ app.get("/movie/:id", async (req, res) => {
     const id = req.params.id;
 
     // Step 1. Connect the Database
-    const client = new MongoClient(URL, {}).connect();
-
+    console.log("Connecting to database:", URL);
+    const client = new MongoClient(URL);
+    await client.connect();
+    
     // Step 2. Select the DB
     let db = (await client).db(DB_NAME);
 
@@ -87,8 +92,10 @@ app.post("/movie/book-movie", async (req, res) => {
 
   try {
     // Step 1. Connect the Database
-    const client =await new MongoClient(URL, {}).connect();
-
+    console.log("Connecting to database:", URL);
+    const client = new MongoClient(URL);
+    await client.connect();
+    
     // Step 2. Select the DB
     let db = (await client).db(DB_NAME);
 
